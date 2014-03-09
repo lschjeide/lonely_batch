@@ -1,9 +1,10 @@
 require "nokogiri"
 
 class Location
-  def initialize(name, noko_tax)
+  def initialize(name, noko_tax, noko_destin)
     @name = name
     @noko_tax = noko_tax
+    @noko_dest = noko_destin
   end
   
   def get_name
@@ -38,13 +39,24 @@ class Location
   	xml_request.text
   end
   
-  def get_intro(noko_dest)
-  
+  def get_intro
   	id = (get_id).strip
-  	xml_request = noko_dest.xpath("//destinations/destination[@atlas_id='#{id}']/introductory/introduction/overview")
+  	xml_request = @noko_dest.xpath("//destinations/destination[@atlas_id='#{id}']/introductory/introduction/overview")
   	xml_request.text.strip
-  	
-  	
+  end  
+  
+  def get_history
+  	id = (get_id).strip
+  	xml_request = @noko_dest.xpath("//destinations/destination[@atlas_id='#{id}']/history/history/history")
+  	xml_request.text.strip
+  end  
+  
+  def get_history_overview
+  	id = (get_id).strip
+  	xml_request = @noko_dest.xpath("//destinations/destination[@atlas_id='#{id}']/history/history/overview")
+  	xml_request.text.strip
   end
+  
+  
   
 end

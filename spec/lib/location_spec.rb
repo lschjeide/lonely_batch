@@ -8,7 +8,9 @@ describe Location do
   describe "initialization" do
   	f = File.open("input_files/taxonomy.xml") 
   	noko = Nokogiri::XML(f)
-    subject(:location) { Location.new("South Africa", noko) }
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+    subject(:location) { Location.new("South Africa", noko, noko_destin) }
 
     it "sets a location" do
       expect(location.get_name).to eq("South Africa")
@@ -19,7 +21,9 @@ describe Location do
   describe "get_name" do 
   	f = File.open("input_files/taxonomy.xml") 
   	noko = Nokogiri::XML(f)
-  	subject(:location) { Location.new("South Africa", noko) }
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+  	subject(:location) { Location.new("South Africa", noko, noko_destin) }
   	
   	it "gets a location name" do 
   		expect(location.get_name).to eq("South Africa")
@@ -29,7 +33,9 @@ describe Location do
   describe "get_lower" do 
   	f = File.open("input_files/taxonomy.xml") 
   	noko = Nokogiri::XML(f)
-  	subject(:location) { Location.new("South Africa", noko) }
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+  	subject(:location) { Location.new("South Africa", noko, noko_destin) }
   	
   	it "gets a location names lower in taxonomy" do 
   		expect(location.get_lower.to_s).to eq("Cape Town, Free State, Gauteng, KwaZulu-Natal, Mpumalanga, The Drakensberg, The Garden Route")
@@ -39,7 +45,9 @@ describe Location do
   describe "get_higher" do 
   	f = File.open("input_files/taxonomy.xml") 
   	noko = Nokogiri::XML(f)
-  	subject(:location) { Location.new("South Africa", noko) }
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+  	subject(:location) { Location.new("South Africa", noko, noko_destin) }
   	
   	it "gets a location names lower in taxonomy" do 
   		expect(location.get_higher.to_s).to eq("World, Africa")
@@ -49,12 +57,39 @@ describe Location do
   describe "get_intro" do 
   	f = File.open("input_files/taxonomy.xml") 
   	noko = Nokogiri::XML(f)
-  	subject(:location) { Location.new("South Africa", noko) }
   	text = "Travel Alert: Crime is a problem throughout South Africa"
-  	f = File.open("input_files/destinations.xml") 
-  	noko_destin = Nokogiri::XML(f)
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+  	subject(:location) { Location.new("South Africa", noko, noko_destin) }
+  	
   	it "gets the introductory content from destinations" do 
-  		expect(location.get_intro(noko_destin).to_s[0..text.length-1]).to eq(text)
+  		expect(location.get_intro.to_s[0..text.length-1]).to eq(text)
+  	end
+  end
+  
+  describe "get_history" do 
+  	f = File.open("input_files/taxonomy.xml") 
+  	noko = Nokogiri::XML(f)
+  	text = "In 1910 the Union of South Africa was created"
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+  	subject(:location) { Location.new("South Africa", noko, noko_destin) }
+  	
+  	it "gets the history content from destinations" do 
+  		expect(location.get_history.to_s[0..text.length-1]).to eq(text)
+  	end
+  end
+  
+  describe "get_history_overview" do 
+  	f = File.open("input_files/taxonomy.xml") 
+  	noko = Nokogiri::XML(f)
+  	text = "The earliest recorded inhabitants of this area of Africa were"
+  	f2 = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f2)
+  	subject(:location) { Location.new("South Africa", noko, noko_destin) }
+  	
+  	it "gets the history overview content from destinations" do 
+  		expect(location.get_history_overview.to_s[0..text.length-1]).to eq(text)
   	end
   end
 
