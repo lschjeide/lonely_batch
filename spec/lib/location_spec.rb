@@ -45,5 +45,17 @@ describe Location do
   		expect(location.get_higher.to_s).to eq("World, Africa")
   	end
   end
+  
+  describe "get_intro" do 
+  	f = File.open("input_files/taxonomy.xml") 
+  	noko = Nokogiri::XML(f)
+  	subject(:location) { Location.new("South Africa", noko) }
+  	text = "Travel Alert: Crime is a problem throughout South Africa"
+  	f = File.open("input_files/destinations.xml") 
+  	noko_destin = Nokogiri::XML(f)
+  	it "gets the introductory content from destinations" do 
+  		expect(location.get_intro(noko_destin).to_s[0..text.length-1]).to eq(text)
+  	end
+  end
 
 end
