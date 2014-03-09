@@ -1,0 +1,4 @@
+describe Location do
+
+
+end
