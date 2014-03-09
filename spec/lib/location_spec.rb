@@ -1,3 +1,5 @@
+require "location"
+
 describe Location do
 
 
