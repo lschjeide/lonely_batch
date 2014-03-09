@@ -15,3 +15,7 @@ Feature: Browse Higher Taxonomies
   Scenario: Browsing Africa
     Given a location "Africa"
     Then the higher taxonomies should be "World"
+    
+  Scenario: Browsing Africa
+    Given a location "Port Sudan"
+    Then the higher taxonomy ids should be "355064, 355629, 355630"

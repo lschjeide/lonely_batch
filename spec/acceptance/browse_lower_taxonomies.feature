@@ -12,3 +12,6 @@ Feature: Browse Lower Taxonomies
     Given a location "Africa"
     Then the lower taxonomies should be "South Africa, Sudan, Swaziland"
     
+   Scenario: Browsing Africa
+    Given a location "Africa"
+    Then the lower taxonomy ids should be "355611, 355629, 355633"
