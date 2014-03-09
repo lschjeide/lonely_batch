@@ -9,5 +9,13 @@ describe Location do
     end
 
   end
+  
+  describe "get_name" do 
+  	subject(:location) { Location.new("South Africa") }
+  	
+  	it "gets a location name" do 
+  		expect(location.get_name).to eq("South Africa")
+  	end
+  end
 
 end
