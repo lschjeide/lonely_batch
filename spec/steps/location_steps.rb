@@ -1,5 +1,7 @@
 step "a location :loc" do |loc|	
-	@location = Location.new(loc)
+	f = File.open("input_files/taxonomy.xml") 
+  	@noko = Nokogiri::XML(f)
+	@location = Location.new(loc, @noko)
 end
 
 step "the lower taxonomies should be :locations" do |locations|
