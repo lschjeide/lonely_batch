@@ -17,4 +17,20 @@ class Location
   	
   end
   
+  def get_higher
+  	out_array = Array.new()
+  	xml_request = @noko.xpath("//*/node[node_name = '#{@name}']/..")
+  	while xml_request.inner_text.split("\n")[1].strip != "World"
+	
+		out_array.push(xml_request.inner_text.split("\n")[1].strip)
+		xml_request = xml_request.xpath("..")
+		
+	end
+	
+	out_array.push("World")
+	
+	out_array.reverse.join(", ")
+  	
+  end
+  
 end

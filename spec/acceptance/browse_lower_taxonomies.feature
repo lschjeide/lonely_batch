@@ -11,3 +11,4 @@ Feature: Browse Lower Taxonomies
   Scenario: Browsing Africa
     Given a location "Africa"
     Then the lower taxonomies should be "South Africa, Sudan, Swaziland"
+    

@@ -35,5 +35,15 @@ describe Location do
   		expect(location.get_lower.to_s).to eq("Cape Town, Free State, Gauteng, KwaZulu-Natal, Mpumalanga, The Drakensberg, The Garden Route")
   	end
   end
+  
+  describe "get_higher" do 
+  	f = File.open("input_files/taxonomy.xml") 
+  	noko = Nokogiri::XML(f)
+  	subject(:location) { Location.new("South Africa", noko) }
+  	
+  	it "gets a location names lower in taxonomy" do 
+  		expect(location.get_higher.to_s).to eq("World, Africa")
+  	end
+  end
 
 end
