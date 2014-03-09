@@ -17,5 +17,13 @@ describe Location do
   		expect(location.get_name).to eq("South Africa")
   	end
   end
+  
+  describe "get_lower" do 
+  	subject(:location) { Location.new("South Africa") }
+  	
+  	it "gets a location names lower in taxonomy" do 
+  		expect(location.get_lower.to_s).to eq("Cape Town, Free State, Gauteng, KwaZulu-Natal, Mpumalanga, The Drakensberg, The Garden Route")
+  	end
+  end
 
 end
