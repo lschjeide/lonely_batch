@@ -22,3 +22,12 @@ b. Simplicity.
 c. Extensibility.
 d. Reliability.
 e. Performance.
+
+Solution
+=============
+
+run lonely_batch.rb taxonomy_file destinations_file
+
+(e.g.) ruby lonely_batch.rb input_files/taxonomy.xml input_files/destinations.xml
+
+The batch files are saved to the output_files directory in the format atlas_id.html where atlas_id is the id of the destination in both the taxonomy and destinations files.
