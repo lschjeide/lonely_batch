@@ -13,24 +13,29 @@ class Batch
 	
 	
 	def all_ids
-		xml_request = @noko_tax.xpath("//*").children.map{ |x| x.xpath("@atlas_node_id").text }.reject{|x| x.empty? }
+		#returns an array of all the node ids (world excluded)
+		@noko_tax.xpath("//*").children.map{ |x| x.xpath("@atlas_node_id").text }.reject{|x| x.empty? }
 	end
 	
 	def batch_create
+	
+		#Write the World level as a special case
 		loc = Location.new("00000", @noko_tax, @noko_destin)
 		write_page_for_location(loc)
 		
+		#Create a page for each ID in the all_ids array
 		all_ids.each do |id|
-		
 			location = Location.new(id, @noko_tax, @noko_destin)
 			write_page_for_location(location)
-		
 		end	
 	end
 
 	def write_page_for_location(location)
 
+		#output name
 		local_filename = "output_files/" + location.get_id + ".html"
+		
+		#page content
 		doc = "<!DOCTYPE html>
 <html>
   <head>
@@ -97,6 +102,7 @@ class Batch
   </body>
 </html>"
 
+	#write to file
 	File.open(local_filename, 'w') {|f| f.write(doc) }
 
 	end

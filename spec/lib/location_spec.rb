@@ -2,9 +2,6 @@ require "location"
 
 describe Location do
 	
-	
-  	
-  	
   describe "initialization" do
   	f = File.open("input_files/taxonomy.xml") 
   	noko = Nokogiri::XML(f)
