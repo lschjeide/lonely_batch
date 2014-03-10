@@ -15,3 +15,13 @@ Feature: Browse Lower Taxonomies
    Scenario: Browsing Africa
     Given a location "Africa"
     Then the lower taxonomy ids should be "355611, 355629, 355633"
+    
+        
+   Scenario: Browsing World
+    Given a location "World"
+    Then the lower taxonomy ids should be "355064, 555064"
+    
+   Scenario: Browsing World
+    Given a location "World"
+    Then the lower taxonomies should be "Africa, South America"
+

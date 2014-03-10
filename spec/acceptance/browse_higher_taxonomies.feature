@@ -18,4 +18,4 @@ Feature: Browse Higher Taxonomies
     
   Scenario: Browsing Africa
     Given a location "Port Sudan"
-    Then the higher taxonomy ids should be "355064, 355629, 355630"
+    Then the higher taxonomy ids should be "00000, 355064, 355629, 355630"

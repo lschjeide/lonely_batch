@@ -50,7 +50,7 @@ describe Location do
   	subject(:location) { Location.new("355611", noko, noko_destin) }
   	
   	it "gets a location ids lower in taxonomy" do 
-  		expect(location.get_lower_ids.join(", ")).to eq("355612, 355614, 355616, 355619, 355622, 355624, 355626")
+  		expect(location.get_lower_ids.map{|x| x["id"]}.join(", ")).to eq("355612, 355614, 355616, 355619, 355622, 355624, 355626")
   	end
   end
   
@@ -74,7 +74,7 @@ describe Location do
   	subject(:location) { Location.new("355611", noko, noko_destin) }
   	
   	it "gets a location ids higher in taxonomy" do 
-  		expect(location.get_higher_ids.join(", ").to_s).to eq("355064")
+  		expect(location.get_higher_ids.map{|x| x["id"]}.join(", ").to_s).to eq("00000, 355064")
   	end
   end
   describe "get_intro" do 

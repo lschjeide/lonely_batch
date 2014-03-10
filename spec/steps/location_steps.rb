@@ -3,7 +3,11 @@ step "a location :loc" do |loc|
   	@noko = Nokogiri::XML(f)
   	f2 = File.open("input_files/destinations.xml") 
   	@noko_destin = Nokogiri::XML(f2)
-  	loc_id = @noko.xpath("//*/node[node_name = '#{loc}']/@atlas_node_id").text
+  	if loc == "World"
+  		loc_id = "00000"
+  	else
+  		loc_id = @noko.xpath("//*/node[node_name = '#{loc}']/@atlas_node_id").text
+  	end
 	@location = Location.new(loc_id, @noko, @noko_destin)
 end
 
@@ -12,7 +16,7 @@ step "the lower taxonomies should be :locations" do |locations|
 end
 
 step "the lower taxonomy ids should be :locations" do |locations|
-	expect(@location.get_lower_ids.join(", ").to_s).to eq(locations)
+	expect(@location.get_lower_ids.map{|x| x["id"]}.join(", ").to_s).to eq(locations)
 end
 
 step "the higher taxonomies should be :locations" do |locations|
@@ -20,7 +24,7 @@ step "the higher taxonomies should be :locations" do |locations|
 end
 
 step "the higher taxonomy ids should be :locations" do |locations|
-	expect(@location.get_higher_ids.join(", ").to_s).to eq(locations)
+	expect(@location.get_higher_ids.map{|x| x["id"]}.join(", ").to_s).to eq(locations)
 end
 
 step "the introductory content should begin with :begin_text" do |text|
