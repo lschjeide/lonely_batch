@@ -3,40 +3,35 @@ require "nokogiri"
 class Batch
 
 
-	def initialize(tax_path, dest_path)
-		
+	def initialize(tax_path, dest_path)		
 		f = File.open(tax_path) 
   		@noko_tax = Nokogiri::XML(f)
   		f2 = File.open(dest_path) 
-  		@noko_destin = Nokogiri::XML(f2)
-	
+  		@noko_destin = Nokogiri::XML(f2)	
 	end
 
-	def navigation_links
 	
-	
-	end
 	
 	def all_ids
-	
-		xml_request = @noko_tax.xpath("//*/node").children.map{ |x| x.xpath("@atlas_node_id").text }.reject{|x| x.empty? }
-	
+		xml_request = @noko_tax.xpath("//*").children.map{ |x| x.xpath("@atlas_node_id").text }.reject{|x| x.empty? }
 	end
 	
 	def batch_create
-	
+		loc = Location.new("00000", @noko_tax, @noko_destin)
+		write_page_for_location(loc)
+		
 		all_ids.each do |id|
 		
+			location = Location.new(id, @noko_tax, @noko_destin)
+			write_page_for_location(location)
 		
-			
-		
-		end
-	
+		end	
 	end
 
-	def write_page_for_name(name)
+	def write_page_for_location(location)
 
-		document.write("<!DOCTYPE html>
+		local_filename = "output_files/" + location.get_id + ".html"
+		doc = "<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv='content-type' content='text/html; charset=UTF-8'>
@@ -48,7 +43,7 @@ class Batch
     <div id='container'>
       <div id='header'>
         <div id='logo'></div>
-        <h1>Lonely Planet: #{@name}</h1>
+        <h1>Lonely Planet: #{location.get_name}</h1>
       </div>
 
       <div id='wrapper'>
@@ -57,7 +52,15 @@ class Batch
             <h3>Navigation</h3>
             <div class='content'>
               <div class='inner'>
-                #{navigation_links()}
+              
+                #{location.get_higher_ids.map{|x| '<a href=' + x['id'] + '.html >' + x['name'] + '</a>'}.join(' >> ')} 
+               
+                #{if !location.get_higher_ids.empty? then ">>" end} 
+                
+                #{location.get_name}
+                
+                <br><br><br>
+                #{location.get_lower_ids.map{|x| '<a href=' + x['id'] + '.html >' + x['name'] + '</a><br>'}.join(' ')}
               </div>
             </div>
           </div>
@@ -67,7 +70,7 @@ class Batch
           <div class='block'>
             <div class='secondary-navigation'>
               <ul>
-                <li class='first'><a href='#'>#{@name}</a></li>
+                <li class='first'><a href='#'>#{location.get_name}</a></li>
               </ul>
               <div class='clear'></div>
             </div>
@@ -75,15 +78,15 @@ class Batch
               <div class='inner'>
           		  Introduction
           		  <p>
-            		 #{@intro}
+            		 #{location.get_intro}
             		</p>
             		History Overview
                 <p>
                 
-                  #{@history_overview}
+                  #{location.get_history_overview}
           		  </p>
                 <p>
-                 #{@history}
+                 #{location.get_history}
                 </p>
               </div>
             </div>
@@ -92,7 +95,9 @@ class Batch
       </div>
     </div>
   </body>
-</html>")
+</html>"
+
+	File.open(local_filename, 'w') {|f| f.write(doc) }
 
 	end
 	
