@@ -1,7 +1,4 @@
-lonely_batch
-============
-
-Lonely Planet Coding Exercise
+## Lonely Planet Coding Exercise
 
 We have two (admittedly not very clean) .xml files from our legacy CMS system - taxonomy.xml holds the information about how destinations are related to each other and destinations.xml holds the actual text content for each destination.
 
@@ -24,47 +21,20 @@ d. Reliability.
 e. Performance.
 
 
-Solution
-=============
+## Getting Started
 
-GEM
-  remote: https://rubygems.org/
-  specs:
-    diff-lcs (1.2.5)
-    gherkin (2.12.2)
-      multi_json (~> 1.3)
-    mini_portile (0.5.2)
-    multi_json (1.9.0)
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
-    rspec (2.14.1)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
-    rspec-core (2.14.8)
-    rspec-expectations (2.14.5)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.6)
-    turnip (1.2.1)
-      gherkin (>= 2.5)
-      rspec (>= 2.0, < 4.0)
+1. Install dependencies (nokogiri, turnip and rspec):
 
-PLATFORMS
-  ruby
+        bundle install
 
-DEPENDENCIES
-  nokogiri
-  turnip
+2. At the command prompt run the application with the two xml files as arguments
 
+        ruby lonely_batch.rb taxonomy_xml_file.xml destinations_xml_file.xml
 
-TO RUN:
+   (provided with e.g.) ruby lonely_batch.rb input_files/taxonomy.xml input_files/destinations.xml
 
-bundle install
+3. To view the created batch of html files:
 
-ruby lonely_batch.rb taxonomy_xml_file.xml destinations_xml_file.xml
+        open output_files/00000.html
 
-(provided with e.g.) ruby lonely_batch.rb input_files/taxonomy.xml input_files/destinations.xml
-
-The batch files are saved to the output_files directory in the format atlas_id.html where atlas_id is the id of the destination in both the taxonomy and destinations files.
-
-after running, type: open output_files/00000.html to view the root ("World") page of processed batch.
+   to view the root ("World") page of processed batch. The batch files are saved to the output_files directory in the format atlas_id.html where atlas_id is the id of the destination in both the taxonomy and destinations files.
